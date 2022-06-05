@@ -287,6 +287,12 @@ class CFGBuilder(ast.NodeVisitor):
                 return node.s
             elif type(node) == ast.Subscript:
                 return node.value.id
+            elif type(node) == ast.Call:
+                return visit_func(node.func)
+            elif type(node) == ast.Constant:
+                # Wrap in curly bracket to differentiate constant
+                return "{" + str(node.value) + "}"
+            return type(node).__name__
 
         func = node.func
         func_name = visit_func(func)
